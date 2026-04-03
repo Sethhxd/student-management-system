@@ -44,5 +44,5 @@ class LoginSerializer(serializers.Serializer):
         else:
             raise serializers.ValidationError('Must include "username" and "password".')
         
-        attrs['users'] = user
+        attrs['user'] = user
         return attrs

@@ -10,7 +10,7 @@ class Course(models.Model):
         User,
         on_delete=models.SET_NULL,
         null=True,
-        limit_choices_to=('role', 'teacher'),
+        limit_choices_to={'role': 'teacher'},
         related_name='courses_taught'
     )
     created_at = models.DateTimeField(auto_now_add=True)
