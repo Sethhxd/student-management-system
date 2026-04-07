@@ -1,63 +1,64 @@
-import React, { useState } from 'react';
-import { useNavigate, Link} from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { register } from '../../utils/api';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { register } from "../../utils/api";
 
 const Register = () => {
-    const navigate = useNavigate();
-    const [loading, setLoading,] = useState(false);
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        first_name: '',
-        last_name: '',
-        role: 'student',
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    first_name: "",
+    last_name: "",
+    role: "student",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
+  };
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
-        if (formData.password !== formData.confirmPassword) {
-            toast.error('Passwords do not match');
-            return;
-        }
+    setLoading(true);
 
-        setLoading(true);
+    try {
+      const userData = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        password2: formData.confirmPassword,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        role: formData.role,
+      };
 
-        try {
-            const userData = {
-                username: formData.username,
-                email: formData.email,
-                password: formData.password,
-                password2: formData.confirmPassword,
-                first_name: formData.first_name,
-                last_name: formData.last_name,
-                role: formData.role,
-            };
+      console.log("Sending:", userData);
 
-            console.log('Sending:', userData);
+      await register(userData);
+      toast.success("Registration successful! Please login.");
+      navigate("/login");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Registration failed";
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            await register(userData);
-            toast.success('Registration successful! Please login.');
-            navigate('/login');
-        } catch (error) {
-            const errorMessage = error.response?.data?.message || 'Registration failed';
-            toast.error(errorMessage);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-      return (
+  return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
@@ -65,8 +66,11 @@ const Register = () => {
             Create your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{' '}
-            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
+            Or{" "}
+            <Link
+              to="/login"
+              className="font-medium text-blue-600 hover:text-blue-500"
+            >
               sign in to existing account
             </Link>
           </p>
@@ -75,7 +79,10 @@ const Register = () => {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Username *
               </label>
               <input
@@ -91,7 +98,10 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email *
               </label>
               <input
@@ -108,7 +118,10 @@ const Register = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="first_name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   First Name
                 </label>
                 <input
@@ -123,7 +136,10 @@ const Register = () => {
               </div>
 
               <div>
-                <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="last_name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Last Name
                 </label>
                 <input
@@ -139,7 +155,10 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="role"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Register as *
               </label>
               <select
@@ -156,7 +175,10 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password *
               </label>
               <input
@@ -172,7 +194,10 @@ const Register = () => {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Confirm Password *
               </label>
               <input
@@ -193,7 +218,7 @@ const Register = () => {
             disabled={loading}
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
           >
-            {loading ? 'Creating account...' : 'Sign up'}
+            {loading ? "Creating account..." : "Sign up"}
           </button>
         </form>
       </div>

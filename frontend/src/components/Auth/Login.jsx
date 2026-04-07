@@ -1,14 +1,13 @@
-// src/components/Auth/Login.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { login } from '../../utils/api';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { login } from "../../utils/api";
 
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -25,22 +24,35 @@ const Login = () => {
 
     try {
       const response = await login(formData);
-      localStorage.setItem('access_token', response.data.access);
-      localStorage.setItem('refresh_token', response.data.refresh);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
 
-      toast.success('Login successful!');
+      console.log("=== LOGIN RESPONSE ===");
+      console.log("Full response:", response);
+      console.log("Access token:", response.data.access);
+      console.log("User:", response.data.user);
+
+      localStorage.setItem("access_token", response.data.access);
+      localStorage.setItem("refresh_token", response.data.refresh);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      console.log("=== AFTER SAVING ===");
+      console.log(
+        "Token from localStorage:",
+        localStorage.getItem("access_token"),
+      );
+      console.log("User from localStorage:", localStorage.getItem("user"));
+
+      toast.success("Login successful!");
 
       // Redirect based on role
-      if (response.data.user.role === 'teacher') {
-        navigate('/teacher/dashboard');
-      } else if (response.data.user.role === 'student') {
-        navigate('/student/dashboard');
+      if (response.data.user.role === "teacher") {
+        navigate("/teacher/dashboard");
+      } else if (response.data.user.role === "student") {
+        navigate("/student/dashboard");
       } else {
-        navigate('/admin/dashboard');
+        navigate("/admin/dashboard");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Login failed');
+      toast.error(error.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -89,7 +101,7 @@ const Login = () => {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </div>
         </form>
