@@ -15,33 +15,6 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-// handle token refresh
-// api.interceptors.response.use(
-//     (response) => response,
-//     async (error) => {
-//         const originalRequest = error.config;
-//         if (error.request?.status === 401 && !originalRequest._retry) {
-//             originalRequest._retry = true;
-//             const refreshToken = localStorage.getItem('refresh_token');
-//             if (refreshToken) {
-//                 try {
-//                     const response = await axios.post('${API_URL}/auth/token/refresh/', {
-//                         refresh: refreshToken,
-//                     });
-//                     localStorage.setItem('access_token', request.data.access);
-//                     originalRequest.headers.Authorization = 'Bearer ${respons.data.access}';
-//                     return api(originalRequest);
-//                 } catch (err) {
-//                     // refresh failed, redirect to login
-//                     localStorage.clear();
-//                     window.location.href = '/login';
-//                 }
-//             }
-//         }
-//         return Promise.reject(error);
-//     }
-// );
-
 // Auth APIs
 export const register = (userData) => api.post('/auth/register/', userData);
 export const login = (credentials) => api.post('/auth/login/', credentials);
