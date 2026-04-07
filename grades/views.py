@@ -6,6 +6,7 @@ from .models import Enrollment, Grade
 from .serializers import EnrollmentSerializer, GradeSerializer
 from courses.models import Course
 from accounts.models import User
+from rest_framework.exceptions import PermissionDenied
 
 class IsTeacherOfCourse(permissions.BasePermission):
   def has_object_permission(self, request, view, obj):
@@ -48,7 +49,7 @@ class GradeCreateView(generics.CreateAPIView):
 
     # check if current user is the teacher of this course
     if enrollment.course.teacher != self.request.user and self.request.user.role != 'admin':
-      raise permissions.PermissionDenied("You can only grade your own course")
+      raise PermissionDenied("You can only grade your own course")
     
     serializer.save()
   

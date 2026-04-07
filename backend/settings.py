@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'accounts',
     'courses',
     'grades',
+    'departments',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'student_mis',
         'USER': 'student_admin',
-        'PASSWORD': 'Piseth1642006',
+        'PASSWORD': 'studentadmin123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -122,7 +123,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
 }
 

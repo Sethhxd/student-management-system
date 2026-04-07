@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import login
 from .models import User
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
+from django.core.exceptions import PermissionDenied
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -46,3 +47,18 @@ class UserListView(generics.ListAPIView):
         if role:
             queryset = queryset.filter(role=role)
         return queryset
+    
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        if self.request.user.role == 'admin':
+            return User.objects.all()
+        return User.objects.filter(id=self.request.user.id)
+    
+    def perform_destroy(self, instance):
+        if instance == self.request.user:
+            raise PermissionDenied("You cannot delete your own admin account")
+        instance.delete();

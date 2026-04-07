@@ -11,7 +11,7 @@ api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");
   console.log('Interceptor - Token found: ', !!token);
   if (token) {
-    config.headers.Authorization = "Bearer ${token}";
+    config.headers.Authorization = `Bearer ${token}`;
     console.log('Interceptor - Added authorization header')
   } else {
     console.log('Interceptor - no token found');
@@ -28,7 +28,7 @@ export const getProfile = () => api.get("/auth/profile/");
 export const getCourses = () => api.get("/courses/");
 export const getTeacherCourses = () => api.get("/courses/teacher/");
 export const createCourse = (courseData) => api.post("/courses/", courseData);
-export const deleteCourse = (id) => api.delete("/courses/${id}/");
+export const deleteCourse = (id) => api.delete(`/courses/${id}/`);
 
 // Grade APIs
 export const addGrade = (gradeData) => api.post("/grades/add/", gradeData);
@@ -38,7 +38,7 @@ export const enrollStudent = (enrollmentData) =>
 
 // Users APIs
 export const getUsers = () => api.get("./auth/users/");
-export const deleteUser = (id) => api.delete("/auth/users/${id}/");
+export const deleteUser = (id) => api.delete(`/auth/users/${id}/`);
 
 // Student's enrolled courses
 export const getMyCourses = () => api.get("/grades/my-courses/");
