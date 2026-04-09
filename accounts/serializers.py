@@ -1,11 +1,14 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import User
+from departments.models import Department
 
 class UserSerializer(serializers.ModelSerializer):
+    department_name = serializers.CharField(source='department.name', read_only=True)
+    department_id = serializers.IntegerField(source='department.id', read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'role', 'phone', 'address', 'department')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'role', 'phone', 'address', 'department', 'department_name', 'department_id')
         read_only_fields = ('id',)
         
 class RegisterSerializer(serializers.ModelSerializer):
@@ -14,7 +17,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password2', 'first_name', 'last_name', 'role')
+        fields = ('username', 'email', 'password', 'password2', 'first_name', 'last_name', 'role', 'department')
         
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -23,7 +26,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         validated_data.pop('password2')
+        department = validated_data.pop('department', None)
         user = User.objects.create_user(**validated_data)
+        if department:
+            user.department = department
+            user.save()
         return user
     
 class LoginSerializer(serializers.Serializer):

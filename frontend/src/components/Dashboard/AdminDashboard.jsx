@@ -19,6 +19,9 @@ const AdminDashboard = () => {
     username: "",
     email: "",
     password: "",
+    password2: "",
+    first_name: "",
+    last_name: "",
     role: "student",
     department: "",
   });
@@ -72,6 +75,7 @@ const AdminDashboard = () => {
         username: "",
         email: "",
         password: "",
+        password2: "",
         role: "student",
         department: "",
       });
@@ -202,6 +206,10 @@ const AdminDashboard = () => {
           <p className="text-2xl font-bold">{stats.totalUsers}</p>
         </div>
         <div className="bg-white rounded-lg shadow p-4">
+          <h3 className="text-gray-500 text-sm">Admins</h3>
+          <p className="text-2xl font-bold text-red-600">{admins.length}</p>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4">
           <h3 className="text-gray-500 text-sm">Teachers</h3>
           <p className="text-2xl font-bold text-blue-600">{stats.teachers}</p>
         </div>
@@ -226,25 +234,42 @@ const AdminDashboard = () => {
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2 mb-6">
         <button
-          onClick={() => setShowUserForm(!showUserForm)}
+          onClick={() => {
+            setShowUserForm(!showUserForm);
+            setShowCourseForm(false);
+            setShowDepartmentForm(false);
+          }}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           + Add User
         </button>
         <button
-          onClick={() => setShowCourseForm(!showCourseForm)}
+          onClick={() => {
+            setShowCourseForm(!showCourseForm);
+            setShowUserForm(false);
+            setShowDepartmentForm(false);
+          }}
           className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
         >
           + Add Course
         </button>
         <button
-          onClick={() => setShowDepartmentForm(!showDepartmentForm)}
+          onClick={() => {
+            setShowDepartmentForm(!showDepartmentForm);
+            setShowUserForm(false);
+            setShowCourseForm(false);
+          }}
           className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
         >
           + Add Department
         </button>
         <button
-          onClick={() => setShowAssignForm(!showAssignForm)}
+          onClick={() => {
+            setShowAssignForm(!showAssignForm);
+            setShowDepartmentForm(false);
+            setShowUserForm(false);
+            setShowCourseForm(false);
+          }}
           className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700"
         >
           Assign Teacher/Course
@@ -286,6 +311,35 @@ const AdminDashboard = () => {
               required
               className="w-full p-2 border rounded"
             />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={newUser.password2}
+              onChange={(e) =>
+                setNewUser({ ...newUser, password2: e.target.value })
+              }
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="text"
+              placeholder="First Name"
+              value={newUser.first_name}
+              onChange={(e) =>
+                setNewUser({ ...newUser, first_name: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+            />
+
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={newUser.last_name}
+              onChange={(e) =>
+                setNewUser({ ...newUser, last_name: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+            />
             <select
               value={newUser.role}
               onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
@@ -315,6 +369,142 @@ const AdminDashboard = () => {
             >
               Create User
             </button>
+          </form>
+        </div>
+      )}
+
+      {/* Course Form */}
+      {showCourseForm && (
+        <div className="bg-gray-50 p-4 rounded-lg mb-6">
+          <h3 className="font-bold mb-3">Create New Course</h3>
+          <form onSubmit={handleCreateCourse} className="space-y-3">
+            <input
+              type="text"
+              placeholder="Course Code (e.g., CS101)"
+              value={newCourse.code}
+              onChange={(e) =>
+                setNewCourse({ ...newCourse, code: e.target.value })
+              }
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="text"
+              placeholder="Course Name"
+              value={newCourse.name}
+              onChange={(e) =>
+                setNewCourse({ ...newCourse, name: e.target.value })
+              }
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="number"
+              placeholder="Credits"
+              value={newCourse.credits}
+              onChange={(e) =>
+                setNewCourse({
+                  ...newCourse,
+                  credits: parseInt(e.target.value),
+                })
+              }
+              required
+              className="w-full p-2 border rounded"
+            />
+            <textarea
+              placeholder="Description (optional)"
+              value={newCourse.description}
+              onChange={(e) =>
+                setNewCourse({ ...newCourse, description: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+              rows="2"
+            />
+            <select
+              value={newCourse.teacher}
+              onChange={(e) =>
+                setNewCourse({ ...newCourse, teacher: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+            >
+              <option value="">Assign Teacher (Optional)</option>
+              {teachers.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.username}
+                </option>
+              ))}
+            </select>
+            <div className="flex gap-2">
+              <button
+                type="submit"
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              >
+                Create Course
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowCourseForm(false)}
+                className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Department Form */}
+      {showDepartmentForm && (
+        <div className="bg-gray-50 p-4 rounded-lg mb-6">
+          <h3 className="font-bold mb-3">Create New Department</h3>
+          <form onSubmit={handleCreateDepartment} className="space-y-3">
+            <input
+              type="text"
+              placeholder="Department Code (e.g., CS)"
+              value={newDepartment.code}
+              onChange={(e) =>
+                setNewDepartment({ ...newDepartment, code: e.target.value })
+              }
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="text"
+              placeholder="Department Name (e.g., Computer Science)"
+              value={newDepartment.name}
+              onChange={(e) =>
+                setNewDepartment({ ...newDepartment, name: e.target.value })
+              }
+              required
+              className="w-full p-2 border rounded"
+            />
+            <textarea
+              placeholder="Description (optional)"
+              value={newDepartment.description}
+              onChange={(e) =>
+                setNewDepartment({
+                  ...newDepartment,
+                  description: e.target.value,
+                })
+              }
+              className="w-full p-2 border rounded"
+              rows="2"
+            />
+            <div className="flex gap-2">
+              <button
+                type="submit"
+                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+              >
+                Create Department
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowDepartmentForm(false)}
+                className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
           </form>
         </div>
       )}

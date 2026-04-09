@@ -15,7 +15,10 @@ class CourseListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated, IsTeacherOrAdmin]
     
     def perform_create(self, serializer):
-        serializer.save(teacher=self.request.user)
+        if self.request.user.role == 'admin' and self.request.data.get('teacher'):
+            serializer.save()
+        else:
+            serializer.save(teacher=self.request.user)
         
 class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Course.objects.all()

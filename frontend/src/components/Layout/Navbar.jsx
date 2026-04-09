@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
-    const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem('user'));
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
 
-    const handleLogout = () => {
-        localStorage.clear();
-        toast.success('Logged out successfully');
-        navigate('/login');
-    };
+  const handleLogout = () => {
+    localStorage.clear();
+    toast.success("Logged out successfully");
+    navigate("/login");
+  };
 
-    return (
+  return (
     <nav className="bg-blue-600 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">

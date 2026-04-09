@@ -42,6 +42,7 @@ const Register = () => {
         first_name: formData.first_name,
         last_name: formData.last_name,
         role: formData.role,
+        department: formData.department ? parseInt(formData.department) : null,
       };
 
       console.log("Sending:", userData);

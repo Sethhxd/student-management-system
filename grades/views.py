@@ -38,6 +38,29 @@ class EnrollmentCreateView(generics.CreateAPIView):
     
     serializer.save()
 
+class EnrollmentListView(generics.ListAPIView):
+  """
+  GET: List enrollments (filter by student and/or course)
+  """
+  serializer_class = EnrollmentSerializer
+  permission_classes = [permissions.IsAuthenticated]
+  
+  def get_queryset(self):
+    queryset = Enrollment.objects.all()
+    
+    student_id = self.request.query_params.get('student')
+    if student_id:
+      queryset = queryset.filter(student_id=student_id)
+    
+    course_id = self.request.query_params.get('course')
+    if course_id:
+      queryset = queryset.filter(course_id=course_id)
+    
+    if self.request.user.role == 'teacher':
+      queryset = queryset.filter(course__teacher=self.request.user)
+
+    return queryset
+  
 class GradeCreateView(generics.CreateAPIView):
   queryset = Grade.objects.all()
   serializer_class = GradeSerializer

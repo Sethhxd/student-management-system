@@ -9,12 +9,12 @@ const api = axios.create({
 // add token request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");
-  console.log('Interceptor - Token found: ', !!token);
+  console.log("Interceptor - Token found: ", !!token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-    console.log('Interceptor - Added authorization header')
+    console.log("Interceptor - Added authorization header");
   } else {
-    console.log('Interceptor - no token found');
+    console.log("Interceptor - no token found");
   }
   return config;
 });
