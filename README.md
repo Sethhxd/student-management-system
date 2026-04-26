@@ -22,7 +22,7 @@ Use these accounts to explore the different user roles:
 
 | Role | Username | Password |
 |------|----------|----------|
-| 👑 Admin | `admin` | `Admin123!` |
+| 👑 Admin | `admin` | `Admin123` |
 | 👨‍🏫 Teacher | `demoteacher` | `DemoPass123!` |
 | 👨‍🎓 Student | `demostudent` | `DemoPass123!` |
 
