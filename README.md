@@ -1,4 +1,4 @@
-# 🎓 Student Management System
+# Student Management System
 
 [![Django](https://img.shields.io/badge/Django-6.0-092E20?logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
@@ -9,7 +9,7 @@
 
 A modern, full-stack web application for managing students, courses, enrollments, and grades. Built with Django REST Framework and React.
 
-## 🚀 Live Demo
+## Live Demo
 
 Experience the application live:
 
@@ -22,11 +22,11 @@ Use these accounts to explore the different user roles:
 
 | Role | Username | Password |
 |------|----------|----------|
-| 👑 Admin | `admin` | `Admin123` |
-| 👨‍🏫 Teacher | `demoteacher` | `DemoPass123!` |
-| 👨‍🎓 Student | `demostudent` | `DemoPass123!` |
+| Admin | `admin` | `Admin123` |
+| Teacher | `demoteacher` | `DemoPass123!` |
+| Student | `demostudent` | `DemoPass123!` |
 
-## 📸 Screenshots
+## Screenshots
 
 | Login | Register |
 |-------|----------|
@@ -40,25 +40,25 @@ Use these accounts to explore the different user roles:
 |----------------|
 | ![Admin Dashboard](screenshots/admin-dashboard.png) |
 
-## ✨ Features
+## Features
 
-### 👨‍🏫 For Teachers
+### For Teachers
 - **Course Management:** Create, edit, and delete courses.
 - **Student Enrollment:** Enroll students in courses.
 - **Gradebook:** Enter and manage student grades (A-F).
 - **Analytics:** Automatic GPA calculation for students.
 
-### 👨‍🎓 For Students
+### For Students
 - **Dashboard:** View all enrolled courses.
 - **Progress Tracking:** Track grades and real-time GPA.
 - **Records:** View academic history by term.
 
-### 👑 For Admins
+### For Admins
 - **Governance:** Full user and course management.
 - **Organization:** Assign teachers to courses and manage departments.
 - **Oversight:** Complete system overview dashboard.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technologies |
 |----------|--------------|
@@ -68,7 +68,7 @@ Use these accounts to explore the different user roles:
 | **Deployment** | Render (Backend), Vercel (Frontend) |
 | **Version Control** | Git, GitHub |
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -80,15 +80,15 @@ Contributions are what make the open-source community such an amazing place to l
 
 For major changes, please open an issue first to discuss what you would like to change.
 
-## 🐛 Issues
+## Issues
 
 Got a problem? Please report it here: [GitHub Issues](https://github.com/Sethhxd/student-management-system/issues)
 
-## 📄 License
+## License
 
 Distributed under the MIT License. See `LICENSE` file for more information.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Django REST Framework](https://www.django-rest-framework.org/) for the powerful API framework.
 - [React](https://reactjs.org/) for the amazing frontend library.
@@ -96,7 +96,7 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 - [Render](https://render.com/) and [Vercel](https://vercel.com/) for seamless deployment.
 - All open-source contributors.
 
-## 👨‍💻 Author
+## Author
 
 **Seth**
 - GitHub: [@Sethhxd](https://github.com/Sethhxd)
